@@ -1,8 +1,6 @@
-### **Grammar & Clarity Correction**
+# DevKeyboardShortcuts System
 
 ![LOGO](Documentation/Logo.jpg)
-
-# DevKeyboardShortcuts System
 
 A hardware-aware Windows Raw Input routing engine for Unity Editor and Standalone builds. It allows developers to bind keyboard shortcuts to modular tools across multiple physical devices without interfering with standard Unity controls or causing Git merge conflicts in team environments.
 
