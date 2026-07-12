@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e130d7f633334458c10f000c274701, type: 3}
+  m_Name: DevInputMapBlenderNav
+  m_EditorClassIdentifier: DevKeyboardShortcuts::GameLib.DevInputMap
+  overrideFor: {fileID: 0}
+  printRawInputToConsole: 0
+  bindings:
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 36
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: a50e0f4f6824c2c4d81b27b92e20aa8d, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 36
+    modifiers:
+    - deviceHardwareId: 
+      virtualKeyCode: 17
+    boundTool: {fileID: 11400000, guid: 154df02530fe6354b9e47a5d49bab9a8, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 35
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 9db31855f7ea9d74b83d92e691b24ac9, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 35
+    modifiers:
+    - deviceHardwareId: 
+      virtualKeyCode: 17
+    boundTool: {fileID: 11400000, guid: 87ce740f97758374ebfe1e2179cfd5dc, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 34
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: b78f91bfb1dadc548822b19d49a3a37a, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 34
+    modifiers:
+    - deviceHardwareId: 
+      virtualKeyCode: 17
+    boundTool: {fileID: 11400000, guid: 61bef0e1db33fbc45a590b7c794426ee, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 33
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: c83bca2ba87bdc44fa74b4e377a371ce, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: 
+    deviceFriendlyName: 
+    virtualKeyCode: 12
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 36fe9a415c8eaf54f949ce2bb65961df, type: 2}

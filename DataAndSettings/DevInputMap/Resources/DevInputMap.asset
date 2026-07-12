@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e130d7f633334458c10f000c274701, type: 3}
+  m_Name: DevInputMap
+  m_EditorClassIdentifier: DevKeyboardShortcuts::GameLib.DevInputMap
+  printRawInputToConsole: 1
+  bindings:
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 124
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: e4e888f9778900f45a0e3c98cf998762, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 125
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: a85a76f2d868e824cba4d84206809133, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 126
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: d6c7b125d43b5384397cdb27d1010aa8, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 130
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 88374073eb660f947bb17fa4a32a6c5a, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 132
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 054ae3dff7a2cbb41995fd2342f50699, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 1
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 131
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 65893cc9f0c1e9945a69a4b4a2df2efc, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 131
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 87d8c390fa2f7bc42898e176b420ce4a, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 127
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: 11afa46e02c01374d87e22ff6dfc46d1, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 128
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: b6c60f4d1541b424e87793432d6983b4, type: 2}
+  - isEnabled: 1
+    requireDoubleClick: 0
+    deviceHardwareId: VID_1189&PID_8890
+    deviceFriendlyName: Mini6+Knot
+    virtualKeyCode: 129
+    modifiers: []
+    boundTool: {fileID: 11400000, guid: da4f081176e5e5c4fbdc6b87998e3cf1, type: 2}
