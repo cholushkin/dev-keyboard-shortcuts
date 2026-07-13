@@ -8,12 +8,17 @@ using UnityEditor;
 
 namespace GameLib
 {
+    /// <summary>
     /// Crash-proof engine with double-click detection, held key tracking for modifiers, and self-healing watchdog.
+    /// </summary>
 #if UNITY_EDITOR
     [InitializeOnLoad]
 #endif
     public static class DevRawInputRouter
     {
+        /// <summary>
+        /// Represents a unique device and virtual key pairing.
+        /// </summary>
         private struct DeviceKey : IEquatable<DeviceKey>
         {
             public string deviceName;
@@ -38,8 +43,10 @@ namespace GameLib
         private static bool isTearingDown = false;
         private const double DoubleClickThreshold = 0.2;
 
+        /// <summary>
         /// Fired whenever any physical keyboard key is pressed.
         /// Parameters: virtualKeyCode, hardwareId, deviceFriendlyName, isDoubleClick
+        /// </summary>
         public static event Action<int, string, string, bool> OnRawKeyPressed;
 
 #if UNITY_EDITOR
@@ -47,12 +54,10 @@ namespace GameLib
         {
             isTearingDown = false;
             EditorApplication.delayCall += Initialize;
-            
             AssemblyReloadEvents.beforeAssemblyReload += OnBeforeReload;
             AssemblyReloadEvents.afterAssemblyReload += OnAfterReload;
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.quitting += OnQuitting;
-            
             EditorApplication.update -= WatchdogTick;
             EditorApplication.update += WatchdogTick;
         }
@@ -60,7 +65,6 @@ namespace GameLib
         private static void WatchdogTick()
         {
             if (isTearingDown || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
-
             if (EditorApplication.timeSinceStartup - lastWatchdogTime > 1.5)
             {
                 lastWatchdogTime = EditorApplication.timeSinceStartup;
@@ -108,7 +112,9 @@ namespace GameLib
             Application.quitting += Cleanup;
         }
 
+        /// <summary>
         /// Checks if a specific virtual key code is currently held down on a matching hardware device.
+        /// </summary>
         public static bool IsKeyCurrentlyHeld(int vkCode, string hardwareIdSubstring)
         {
             foreach (var item in pressedKeys)
@@ -122,10 +128,12 @@ namespace GameLib
             return false;
         }
 
+        /// <summary>
+        /// Monitors window handle shifts and reinstalls the Windows hook if it drops or changes.
+        /// </summary>
         private static void VerifyAndHealHook()
         {
             if (isTearingDown) return;
-
             if (hookHandle == IntPtr.Zero)
             {
                 Debug.LogWarning("[DevRawInputRouter Watchdog] Hook handle is zero! Performing auto-recovery...");
@@ -142,12 +150,15 @@ namespace GameLib
             }
         }
 
+        /// <summary>
+        /// Registers raw keyboard input devices and installs the native Win32 message hook.
+        /// </summary>
         private static void Initialize()
         {
             if (isTearingDown) return;
             if (hookHandle != IntPtr.Zero) return;
 
-            // Touch DevInputMap to refresh active modular maps and check console debugging flags
+            /// Touch DevInputMap to refresh active modular maps and check console debugging flags
             DevInputMap.ReloadActiveMaps();
             bool isDebug = DevInputMap.IsAnyDebugEnabled();
 
@@ -163,6 +174,8 @@ namespace GameLib
             var rid = new RawInputWin32.RAWINPUTDEVICE[1];
             rid[0].usUsagePage = RawInputWin32.HID_USAGE_PAGE_GENERIC;
             rid[0].usUsage = RawInputWin32.HID_USAGE_KEYBOARD;
+            
+            /// RIDEV_INPUTSINK is required so Unity docked child windows still receive input messages
             rid[0].dwFlags = RawInputWin32.RIDEV_INPUTSINK;
             rid[0].hwndTarget = targetWindow;
 
@@ -191,6 +204,9 @@ namespace GameLib
             }
         }
 
+        /// <summary>
+        /// Resolves the primary Unity window handle across Editor and Standalone runtimes.
+        /// </summary>
         private static IntPtr GetUnityWindowHandle()
         {
             try
@@ -206,6 +222,9 @@ namespace GameLib
             return RawInputWin32.GetForegroundWindow();
         }
 
+        /// <summary>
+        /// Unbinds the Win32 hook and clears all tracked key states.
+        /// </summary>
         private static void Cleanup()
         {
             if (hookHandle != IntPtr.Zero)
@@ -221,6 +240,9 @@ namespace GameLib
             }
         }
 
+        /// <summary>
+        /// Native Win32 hook callback that intercepts application window messages.
+        /// </summary>
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             try
@@ -238,18 +260,27 @@ namespace GameLib
             {
                 Debug.LogError($"[DevRawInputRouter] Suppressed fatal crash in Win32 Hook: {e}");
             }
-
             return RawInputWin32.CallNextHookEx(hookHandle, nCode, wParam, lParam);
         }
 
+        /// <summary>
+        /// Parses unmanaged keyboard input headers and broadcasts events to active modular input maps.
+        /// </summary>
         private static void ProcessRawInputMessage(IntPtr hRawInput)
         {
+#if UNITY_EDITOR
+            /// Ignore raw input if Unity Editor is not the active Windows application
+            if (!UnityEditorInternal.InternalEditorUtility.isApplicationActive) return;
+#else
+            if (!Application.isFocused) return;
+#endif
+
             uint dwSize = 0;
             uint headerSize = (uint)Marshal.SizeOf(typeof(RawInputWin32.RAWINPUTHEADER));
-
             RawInputWin32.GetRawInputData(hRawInput, RawInputWin32.RID_INPUT, IntPtr.Zero, ref dwSize, headerSize);
+            
             if (dwSize < headerSize) return;
-
+            
             IntPtr buffer = Marshal.AllocHGlobal((int)dwSize);
             try
             {
@@ -257,7 +288,8 @@ namespace GameLib
                 {
                     var rawInput = Marshal.PtrToStructure<RawInputWin32.RAWINPUT>(buffer);
                     
-                    if (rawInput.header.dwType == 1) // 1 = RIM_TYPEKEYBOARD
+                    /// 1 corresponds to RIM_TYPEKEYBOARD
+                    if (rawInput.header.dwType == 1)
                     {
                         int vkCode = rawInput.keyboard.VKey;
                         bool isKeyUp = (rawInput.keyboard.Flags & RawInputWin32.RI_KEY_BREAK) != 0;
@@ -276,6 +308,7 @@ namespace GameLib
                                 double now = UnityEngine.Time.realtimeSinceStartupAsDouble;
 #endif
                                 bool isDoubleClick = false;
+
                                 if (lastPressTimes.TryGetValue(devKey, out double lastTime))
                                 {
                                     if (now - lastTime < DoubleClickThreshold)
@@ -299,8 +332,8 @@ namespace GameLib
                                 }
 
                                 OnRawKeyPressed?.Invoke(vkCode, deviceName, deviceName, isDoubleClick);
-
-                                // Broadcast to all active modular maps (overridden maps are excluded automatically!)
+                                
+                                /// Broadcast to all active modular maps while excluding overridden maps automatically
                                 DevInputMap.ProcessAllRawKeyPresses(vkCode, deviceName, isDoubleClick);
                             }
                         }

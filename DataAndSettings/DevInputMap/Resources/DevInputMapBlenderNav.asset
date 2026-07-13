@@ -17,6 +17,7 @@ MonoBehaviour:
   bindings:
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 0
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 36
@@ -24,6 +25,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: a50e0f4f6824c2c4d81b27b92e20aa8d, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 0
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 36
@@ -33,6 +35,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: 154df02530fe6354b9e47a5d49bab9a8, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 0
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 35
@@ -40,6 +43,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: 9db31855f7ea9d74b83d92e691b24ac9, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 0
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 35
@@ -49,6 +53,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: 87ce740f97758374ebfe1e2179cfd5dc, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 0
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 34
@@ -56,6 +61,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: b78f91bfb1dadc548822b19d49a3a37a, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 0
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 34
@@ -65,6 +71,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: 61bef0e1db33fbc45a590b7c794426ee, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 2
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 33
@@ -72,6 +79,7 @@ MonoBehaviour:
     boundTool: {fileID: 11400000, guid: c83bca2ba87bdc44fa74b4e377a371ce, type: 2}
   - isEnabled: 1
     requireDoubleClick: 0
+    executionContext: 1
     deviceHardwareId: 
     deviceFriendlyName: 
     virtualKeyCode: 12
