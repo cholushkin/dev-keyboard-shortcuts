@@ -29,32 +29,33 @@ namespace GameLib
         [Tooltip("Enable or disable this shortcut without deleting it.")]
         public bool isEnabled;
 
-        [Tooltip("If checked, this shortcut will only trigger on a double-click of the key.")]
-        public bool requireDoubleClick;
-
-        [Header("Execution Context")] [Tooltip("Where this shortcut is allowed to trigger.")]
+        [Header("Execution Context")]
+        [Tooltip("Where this shortcut is allowed to trigger.")]
         public DevExecutionContext executionContext;
 
-        [Header("Hardware Device Mapping")] [Tooltip("Paste the USB Hardware ID (e.g., 'VID_046D&PID_C31C') or a unique substring. Leave empty to match ANY keyboard.")]
+        [Header("Hardware Device Mapping")]
+        [Tooltip("Paste the USB Hardware ID (e.g., 'VID_046D&PID_C31C') or a unique substring. Leave empty to match ANY keyboard.")]
         public string deviceHardwareId;
 
         [Tooltip("A human-readable note for yourself (e.g., 'Main Keyboard' or 'External Numpad').")]
         public string deviceFriendlyName;
 
-        [Header("Key & Action")] [Tooltip("The standard Windows Virtual Key (VK) code in decimal (e.g., 96 for Numpad 0, 97 for Numpad 1).")]
+        [Header("Key & Action")]
+        [Tooltip("The standard Windows Virtual Key (VK) code in decimal (e.g., 96 for Numpad 0, 97 for Numpad 1).")]
         public int virtualKeyCode;
 
-        [Header("Modifiers (Up to 2)")] [Tooltip("Optional modifier keys that must be held down simultaneously. Up to 2 modifiers are evaluated.")]
+        [Header("Modifiers (Up to 2)")]
+        [Tooltip("Optional modifier keys that must be held down simultaneously. Up to 2 modifiers are evaluated.")]
         public List<DevKeyModifier> modifiers;
 
         [Tooltip("The tool asset to execute when this key is pressed on the specified device.")]
         public DevActionTool boundTool;
 
-        public bool Matches(int vkCode, string incomingHardwareId, bool isDoubleClick)
+        /// Evaluates if an incoming raw key press matches this binding.
+        public bool Matches(int vkCode, string incomingHardwareId)
         {
             if (!isEnabled || boundTool == null) return false;
             if (this.virtualKeyCode != vkCode) return false;
-            if (this.requireDoubleClick != isDoubleClick) return false;
 
             // 1. Validate Execution Context (Focus & Text Field Checks)
             if (!IsContextValid()) return false;

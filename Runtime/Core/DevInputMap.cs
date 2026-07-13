@@ -29,7 +29,7 @@ namespace GameLib
         public DevInputMap overrideFor;
 
         [Header("Debug Settings")]
-        [Tooltip("If enabled, prints diagnostic logs, VK Codes, Device Names, and double-click states to the console.")]
+        [Tooltip("If enabled, prints diagnostic logs, VK Codes, and Device Names to the console.")]
         public bool printRawInputToConsole = false;
 
         [Header("Configured Bindings")]
@@ -88,7 +88,7 @@ namespace GameLib
         }
 
         /// Evaluates an incoming raw input press across all active modular input maps.
-        public static void ProcessAllRawKeyPresses(int vkCode, string deviceName, bool isDoubleClick)
+        public static void ProcessAllRawKeyPresses(int vkCode, string deviceName)
         {
             var maps = ActiveMaps;
             if (maps == null || maps.Count == 0)
@@ -101,23 +101,23 @@ namespace GameLib
 
             if (isDebug)
             {
-                Debug.Log($"[DevTools Raw Input] VK Code: {vkCode} (Hex: 0x{vkCode:X2}) | Device: '{deviceName}' | DoubleClick: {isDoubleClick}");
+                Debug.Log($"[DevTools Raw Input] VK Code: {vkCode} (Hex: 0x{vkCode:X2}) | Device: '{deviceName}'");
             }
 
             int totalMatches = 0;
             for (int i = 0; i < maps.Count; i++)
             {
-                totalMatches += maps[i].ProcessRawKeyPress(vkCode, deviceName, isDoubleClick, isDebug);
+                totalMatches += maps[i].ProcessRawKeyPress(vkCode, deviceName, isDebug);
             }
 
             if (totalMatches == 0 && isDebug)
             {
-                Debug.Log($"[DevInputMap] No matching shortcuts found across {maps.Count} active map(s) for VK: {vkCode} on device '{deviceName}' (DoubleClick: {isDoubleClick}).");
+                Debug.Log($"[DevInputMap] No matching shortcuts found across {maps.Count} active map(s) for VK: {vkCode} on device '{deviceName}'.");
             }
         }
 
         /// Evaluates an incoming raw input press against this specific map's bindings.
-        public int ProcessRawKeyPress(int vkCode, string deviceName, bool isDoubleClick, bool isDebug)
+        public int ProcessRawKeyPress(int vkCode, string deviceName, bool isDebug)
         {
             if (bindings == null || bindings.Count == 0) return 0;
 
@@ -125,7 +125,7 @@ namespace GameLib
             for (int i = 0; i < bindings.Count; i++)
             {
                 var binding = bindings[i];
-                if (binding.Matches(vkCode, deviceName, isDoubleClick))
+                if (binding.Matches(vkCode, deviceName))
                 {
                     matchCount++;
                     if (isDebug || printRawInputToConsole)
