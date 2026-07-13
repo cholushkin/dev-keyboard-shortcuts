@@ -31,6 +31,10 @@ namespace GameLib
         }
 
         private static readonly HashSet<DeviceKey> pressedKeys = new HashSet<DeviceKey>();
+        
+        /// Lightweight O(1) lookup set containing only currently held virtual key codes across all devices
+        private static readonly HashSet<int> activeVirtualKeys = new HashSet<int>();
+        
         private static bool isTearingDown = false;
 
         /// Fired whenever any physical keyboard key is pressed.
@@ -111,14 +115,19 @@ namespace GameLib
             Application.quitting += Cleanup;
         }
 
-        /// Checks if a specific virtual key code is currently held down on a matching hardware device.
+        /// Checks if a specific virtual key code is currently held down on a matching hardware device in O(1) initial time.
         public static bool IsKeyCurrentlyHeld(int vkCode, string hardwareIdSubstring)
         {
+            /// O(1) early exit: instantly return false if the virtual key code is not currently pressed on ANY device
+            if (!activeVirtualKeys.Contains(vkCode)) return false;
+
+            /// If no specific hardware ID is required, the integer check above is sufficient
+            if (string.IsNullOrEmpty(hardwareIdSubstring)) return true;
+
             foreach (var item in pressedKeys)
             {
                 if (item.vkCode == vkCode)
                 {
-                    if (string.IsNullOrEmpty(hardwareIdSubstring)) return true;
                     if (item.deviceName.IndexOf(hardwareIdSubstring, StringComparison.OrdinalIgnoreCase) >= 0) return true;
                 }
             }
@@ -229,6 +238,7 @@ namespace GameLib
         private static void Cleanup()
         {
             pressedKeys.Clear();
+            activeVirtualKeys.Clear();
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             if (hookHandle != IntPtr.Zero)
             {
@@ -301,13 +311,13 @@ namespace GameLib
                             if (!pressedKeys.Contains(devKey))
                             {
                                 pressedKeys.Add(devKey);
+                                activeVirtualKeys.Add(vkCode);
 
                                 if (DevInputMap.IsAnyDebugEnabled())
                                 {
                                     Debug.Log($"[DevRawInputRouter] Intercepted Key Press -> VK: {vkCode} | Device: '{cleanName}'");
                                 }
 
-                                /// CRITICAL FIX: Pass raw uncleaned path as argument 2, clean friendly name as argument 3
                                 OnRawKeyPressed?.Invoke(vkCode, rawPath, cleanName);
                                 
                                 /// Broadcast to all active modular maps while excluding overridden maps automatically
@@ -317,6 +327,21 @@ namespace GameLib
                         else
                         {
                             pressedKeys.Remove(devKey);
+                            
+                            /// Re-verify if any other connected device is still holding this virtual key code
+                            bool stillHeld = false;
+                            foreach (var item in pressedKeys)
+                            {
+                                if (item.vkCode == vkCode)
+                                {
+                                    stillHeld = true;
+                                    break;
+                                }
+                            }
+                            if (!stillHeld)
+                            {
+                                activeVirtualKeys.Remove(vkCode);
+                            }
                         }
                     }
                 }
