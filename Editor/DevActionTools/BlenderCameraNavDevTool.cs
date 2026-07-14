@@ -79,12 +79,12 @@ namespace GameLib
                     SetViewOrientation(sceneView, Vector3.up, Vector3.forward);
                     break;
 
-                case CameraNavAction.ViewFront:
-                    SetViewOrientation(sceneView, Vector3.forward, Vector3.up);
+                case CameraNavAction.ViewFront:                    
+                    SetViewOrientation(sceneView, Vector3.back, Vector3.up);
                     break;
 
-                case CameraNavAction.ViewBack:
-                    SetViewOrientation(sceneView, Vector3.back, Vector3.up);
+                case CameraNavAction.ViewBack:                    
+                    SetViewOrientation(sceneView, Vector3.forward, Vector3.up);
                     break;
 
                 case CameraNavAction.ViewRight:
@@ -300,8 +300,8 @@ namespace GameLib
         {
             if (dir == Vector3.down) return "Top View";
             if (dir == Vector3.up) return "Bottom View";
-            if (dir == Vector3.forward) return "Front View";
-            if (dir == Vector3.back) return "Back View";
+            if (dir == Vector3.back) return "Front View";
+            if (dir == Vector3.forward) return "Back View";
             if (dir == Vector3.left) return "Right View";
             if (dir == Vector3.right) return "Left View";
             return "Custom View";

@@ -47,7 +47,9 @@ namespace GameLib
             bool paused = TimeScaleDevTool.IsPaused;
 
             string statusIcon = paused ? "⏸️" : "🕑";
-            string formattedScale = paused ? "x0 (PAUSED)" : $"x{value.ToString("0.##")}";
+            
+            /// Render the target timescale value even while paused so knob adjustments are visible in real time
+            string formattedScale = paused ? $"x{value:0.##} (PAUSED)" : $"x{value:0.##}";
 
             _statusLabel.text = $"{statusIcon}scale: {formattedScale}";
             _statusLabel.style.color = paused ? new StyleColor(new Color(1.0f, 0.4f, 0.4f)) : new StyleColor(Color.white);

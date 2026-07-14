@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace GameLib
 {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
     /// Native Win32 API definitions for Windows Raw Input and window hooking.
     public static class RawInputWin32
     {
@@ -11,11 +12,9 @@ namespace GameLib
         public const int RIDI_DEVICENAME = 0x20000007;
         public const int RIDEV_INPUTSINK = 0x00000100;
         public const int RID_INPUT = 0x10000003;
-
         public const ushort HID_USAGE_PAGE_GENERIC = 0x01;
         public const ushort HID_USAGE_KEYBOARD = 0x06;
-
-        public const int RI_KEY_BREAK = 0x0001; // Key release flag
+        public const int RI_KEY_BREAK = 0x0001;
 
         public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -90,8 +89,9 @@ namespace GameLib
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetActiveWindow();
-        
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
     }
+#endif
 }
