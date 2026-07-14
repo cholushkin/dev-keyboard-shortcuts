@@ -2,6 +2,8 @@
 
 ![LOGO](Documentation/Logo.jpg)
 
+![LOGO](Documentation/SetupExample.jpg)
+
 A hardware-aware Windows Raw Input routing engine for Unity Editor and Standalone builds. It allows developers to bind keyboard shortcuts to modular tools across multiple physical devices without interfering with standard Unity controls or causing Git merge conflicts in team environments.
 
 ---
