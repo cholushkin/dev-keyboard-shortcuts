@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DevInputMap
   m_EditorClassIdentifier: DevKeyboardShortcuts::GameLib.DevInputMap
   overrideFor: {fileID: 0}
-  printRawInputToConsole: 1
+  printRawInputToConsole: 0
   bindings:
   - isEnabled: 1
     executionContext: 0
